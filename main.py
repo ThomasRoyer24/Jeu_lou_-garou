@@ -18,14 +18,19 @@ class Main:
 
     def get_data(self):
         return self.__player
+
+    def get_name_role(self):
+        return self.__name_role
+
     def sorciere(self, choix : str) -> None: #un bouton sauve avec une fonction qui verifie que sauve est true et un bouton qui affiche nom_joueur mort et Yes
         self.__joueur_mort.append("p1")
+        print(self.__name_role)
         for key, value in self.__name_role.items():
             if value == "sorciere":
                 sorciere = key
         liste_player_alive = []
         for player in self.__player:
-            if player.get_is_alive() == 1 and player.get_name() != sorciere:
+            if player.get_is_alive() == 1 and player.get_role() != "sorciere":
                 liste_player_alive.append(player.get_name())
         if choix == "Sauve":
             self.__sauve = False
@@ -35,7 +40,10 @@ class Main:
             del(self.__joueur_mort[-1])
         if choix == "Poison":
             self.__poison = False
-            print("qui veux tu tuer entre: " + str(liste_player_alive) )
+            print("qui veux tu tuer entre: " + str(liste_player_alive))
+            vote = key.vote()
+            #eliminer le joueur voté
+
 
             #self.__joueur_mort.append(vote)
 
@@ -52,8 +60,9 @@ class Main:
                 for elt in range(len(liste_role)):
                     random_role = random.choice(liste_role)
                     liste_role.remove(random_role)
-                    self.__name_role[liste_player[elt]] = random_role
-                    result.append(Player(liste_player[elt], random_role))
+                    obj = Player(liste_player[elt], random_role)
+                    self.__name_role[obj] = random_role
+                    result.append(obj)
         return result
 
 call = Main(8)
@@ -62,4 +71,4 @@ test = data[0].get_role()
 
 print(data[1].get_name())
 print(test)
-sor = call.sorciere("Sauve")
+sor = call.sorciere("Poison")
