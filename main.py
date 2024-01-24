@@ -60,6 +60,6 @@ call = Main(8)
 data = call.get_data()
 test = data[0].get_role()
 
-print(data[0].get_name())
+print(data[1].get_name())
 print(test)
 sor = call.sorciere("Sauve")
