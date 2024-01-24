@@ -19,4 +19,4 @@ class Player:
         self.__role = value
 
     def vote(self):
-        return input('Enter the name of the person you want to kill :')
+        return input()
