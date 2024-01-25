@@ -10,6 +10,7 @@ class Main:
         self.__name_role = {} # dico p0->loup p1->voyante...
         self.__player = self.create_game_player(nb_player)
         self.__vote = {}
+        self.__loups_villageois = [] #list nombre de loup puis nombre de villageois
 
     def get_joueur_mort(self):
         return self.__joueur_mort
@@ -23,15 +24,15 @@ class Main:
     def get_vote(self):
         return self.__vote
 
-    def set_vote(self,name: str) -> None:
-        self.__vote[name] +=1
+    def empty_vote(self,name: str) -> None:
+        self.__vote= {}
 
     def kill(self, player):
         player.set_is_alive(0)
         self.add_joueur_mort(player)
 
     def sorciere(self, choix : str) -> None: #un bouton sauve avec une fonction qui verifie que sauve est true et un bouton qui affiche nom_joueur mort et Yes
-        self.__joueur_mort.append("p1")
+        self.__joueur_mort.append("p1") #?????????
         for key, value in self.__name_role.items():
             if value == "sorciere":
                 sorciere = key
@@ -62,6 +63,9 @@ class Main:
         liste_role = []
         for key, value in DICO_NBJOUEURS.items():
             if key == nb_player:
+                self.__loups_villageois.append(DICO_NBJOUEURS[key][0])
+                self.__loups_villageois.append(nb_player-DICO_NBJOUEURS[key][0])
+
                 for i in range(nb_player+1):
                     #creation des noms des joueurs
                     liste_player.append("p"+str(i))
@@ -98,7 +102,7 @@ class Main:
         print('lles Loups-Garous se réveillent, se reconnaissent et désignent une nouvelle victime !!!')
         for players in self.get_players(self) :
             if players.get_role() == 'loup' and players.get_is_alive() == 1:
-                self.set_vote(self,players.vote())
+                self.set_vote(self,players.vote(self.get_players(self)))
                 self.kill(max(self.get_vote(self), key=self.get_vote(self).get))
         print('les loups se rendorme')
 
@@ -112,7 +116,55 @@ class Main:
                 players.set_role(role_player_designe) #modifier le role du joueur designe
                 player_x.set_role("voleur")#modifier le role du voleur
 
+#----------------------------------------------Sorciere------------------------------------------------------------------
+
+        for players in self.get_players(self) :
+            if players.get_role() == 'sorciere' and players.get_is_alive() == 1:
+                self.sorciere()
+
+#----------------------------------------------Jour------------------------------------------------------------------
+        print("C’est le matin, le village se réveille,")
+        if not self.__joueur_mort:
+            print("Il n'y a pas eu de mort.")
+        else:
+            stats_morts = {}
+            for joueur in self.__joueur_mort:
+                nom_du_joueur = joueur.get_name()
+                stats_morts[nom_du_joueur] = stats_morts.get(nom_du_joueur, 0) + 1
+
+            print("Statistiques des morts :")
+            for nom, nombre_de_morts in stats_morts.items():
+                print(f"{nom} : {nombre_de_morts} mort(s).")
+
+        print("Les joueurs doivent éliminer un joueur suspecté d’être un Loup-Garou")
+        for players in self.get_players(self) :
+            if players.get_is_alive() == 1:
+                joueur_vote = players.vote(self.get_players(self))
+                if joueur_vote in self.get_vote():
+                    self.get_vote()[joueur_vote] += 1
+                else:
+                    self.get_vote()[joueur_vote] = 1
+
+    def finish(self):
+        for players in self.get_players(self) :
+            loups_mort = 0
+            villageois_mort = 0
+            if players.get_role() != 'loup' and players.get_is_alive() == 0:
+                villageois_mort +=1
+            if players.get_role() == 'loup' and players.get_is_alive() == 0:
+                loups_mort +=1
+
+        if loups_mort == self.__loups_villageois[0] :
+            print("Les villageois on gagner")
+            return 1
+        if villageois_mort == self.__loups_villageois[1]:
+            print("Les loups on gagner")
+            return 1
+        return 0
 
 
-
-
+def main():
+    jeux = Main()
+    jeux.create_game_player(7)
+    while jeux.finish() != 1:
+        jeux.game()
