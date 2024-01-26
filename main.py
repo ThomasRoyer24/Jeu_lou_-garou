@@ -30,8 +30,11 @@ class Main:
     def get_vote(self):
         return self.__vote
 
-    def empty_vote(self,name: str) -> None:
+    def empty_vote(self) -> None:
         self.__vote= {}
+
+    def empty_joueur_mort(self):
+        self.__joueur_mort = []
 
     def kill(self, player):
         player.set_is_alive(0)
@@ -39,6 +42,7 @@ class Main:
 
     def condition_sorciere(self) -> str:
         if self.__poison and self.__sauve:
+            print("Le joueur mort est : " + self.__joueur_mort[-1].get_name())
             choix = input("Vous pouvez choisir 'poison' ou 'sauve'. Entrez votre choix: ")
 
         elif self.__poison:
@@ -46,6 +50,7 @@ class Main:
 
         elif self.__sauve:
             choix = input("Vous pouvez choisir 'sauve' ou ne rien . Entrez votre choix: ")
+            print("Le joueur mort est : " + self.__joueur_mort[-1].get_name())
         else:
             choix = None
         return choix
@@ -64,8 +69,7 @@ class Main:
         choix = self.condition_sorciere()
         if choix == "sauve" and self.__sauve == True:
             self.__sauve = False
-            print("Le joueur mort est : " + self.__joueur_mort[-1].get_name())
-            name = int(self.__joueur_mort[-1][1].get_name())
+            name = int(self.__joueur_mort[-1].get_name()[1])
             self.__player[name].set_is_alive(1)
             del (self.__joueur_mort[-1])
         if choix == "poison" and self.__poison == True:
@@ -127,6 +131,7 @@ class Main:
             if players.get_role() == 'loups' and players.get_is_alive() == 1:
                 self.set_vote(players.vote(self.get_players()))
         self.kill(max(self.get_vote(), key=self.get_vote().get))
+        self.empty_vote()
         print('les loups se rendorme')
 
 #----------------------------------------------Voleur------------------------------------------------------------------
@@ -146,52 +151,57 @@ class Main:
                 self.sorciere(players)
 
 #----------------------------------------------Jour------------------------------------------------------------------
+        if self.finish() == 1:
+            return 1
+
         print("C’est le matin, le village se réveille,")
         if not self.__joueur_mort:
             print("Il n'y a pas eu de mort.")
         else:
             stats_morts = {}
             for joueur in self.__joueur_mort:
+                print("le joueur " + joueur.get_name() + " est mort, il etait "+joueur.get_role())
                 if joueur.get_role() == 'chasseur':
-                    self.kill(joueur.vote(self.get_players()))
-                nom_du_joueur = joueur.get_name()
-                stats_morts[nom_du_joueur] = stats_morts.get(nom_du_joueur, 0) + 1
-
-            print("Statistiques des morts :")
-            for nom, nombre_de_morts in stats_morts.items():
-                print(f"{nom} : {nombre_de_morts} mort(s).")
+                    victime_chasseur = joueur.vote(self.get_players())
+                    self.kill(victime_chasseur)
+            self.empty_joueur_mort()
 
         print("Les joueurs doivent éliminer un joueur suspecté d’être un Loup-Garou")
-        for players in self.get_players() :
+        for players in self.get_players():
             if players.get_is_alive() == 1:
                 self.set_vote(players.vote(self.get_players()))
-    ### KILL
+        joueur_mort_vote = max(self.get_vote(), key=self.get_vote().get)
+        self.kill(joueur_mort_vote)
+        self.empty_joueur_mort()
+        print("le joueur " + joueur_mort_vote.get_name() + " est mort, il etait " + joueur_mort_vote.get_role())
+        self.empty_vote()
+
+        if self.finish() == 1:
+            return 1
 
 
     def finish(self):
-        global villageois_mort
+        loups_mort = 0
+        villageois_mort = 0
         for players in self.get_players() :
-            loups_mort = 0
-            villageois_mort = 0
-            if players.get_role() != 'loup' and players.get_is_alive() == 0:
+            if players.get_role() != 'loups' and players.get_is_alive() == 0:
                 villageois_mort +=1
-            if players.get_role() == 'loup' and players.get_is_alive() == 0:
+            if players.get_role() == 'loups' and players.get_is_alive() == 0:
                 loups_mort +=1
 
-        if loups_mort == self.__loups_villageois[0] :
-            print("Les villageois on gagner")
+        if loups_mort == self.__loups_villageois[0]:
+            print("Les villageois on gagné")
             return 1
         if villageois_mort == self.__loups_villageois[1]:
-            print("Les loups on gagner")
+            print("Les loups on gagné")
             return 1
         return 0
 
 
 def main():
-    jeux = Main(8)
-    jeux.create_game_player(7)
-    while jeux.finish() != 1:
-        jeux.game()
+    jeux = Main(int(input("Nombre de joueur: ")))
+    while jeux.game() != 1:
+        pass
 
 
 main()
