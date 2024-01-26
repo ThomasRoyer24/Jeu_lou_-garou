@@ -129,6 +129,8 @@ class Main:
         else:
             stats_morts = {}
             for joueur in self.__joueur_mort:
+                if joueur.get_role() == 'chasseur':
+                    self.kill(joueur.vote(self.get_players(self)))
                 nom_du_joueur = joueur.get_name()
                 stats_morts[nom_du_joueur] = stats_morts.get(nom_du_joueur, 0) + 1
 
@@ -146,6 +148,7 @@ class Main:
                     self.get_vote()[joueur_vote] = 1
 
     def finish(self):
+        global villageois_mort
         for players in self.get_players(self) :
             loups_mort = 0
             villageois_mort = 0
