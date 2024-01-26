@@ -46,27 +46,41 @@ class Main:
             choix = None
         return choix
 
-
-    def sorciere(self) -> None: #un bouton sauve avec une fonction qui verifie que sauve est true et un bouton qui affiche nom_joueur mort et Yes
-
-        choix = self.condition_sorciere()
-        self.__joueur_mort.append("p1") #?????????
+    def is_alive(self):
         liste_player_alive = []
         for player in self.__player:
-            if player.get_is_alive() == 1 and player.get_role() != "sorciere":
+            if player.get_is_alive() == 1:
                 liste_player_alive.append(player.get_name())
-        if choix == "sauve" and self.__sauve==True:
+        print("joueur alive : " + str(liste_player_alive))
+        return liste_player_alive
+
+    def sorciere(
+            self) -> None:  # un bouton sauve avec une fonction qui verifie que sauve est true et un bouton qui affiche nom_joueur mort et Yes
+
+        choix = self.condition_sorciere()
+        self.__joueur_mort.append("p1")  # ?????????
+        for player in self.__player:
+            if player.get_role() == "sorciere":
+                sorciere = player.get_name()
+        liste_player_alive = self.is_alive()
+        liste_player_alive.remove(sorciere)
+        if choix == "sauve" and self.__sauve == True:
             self.__sauve = False
             print("Le joueur mort est : " + self.__joueur_mort[-1])
             name = int(self.__joueur_mort[-1][1])
             self.__player[name].set_is_alive(1)
-            del(self.__joueur_mort[-1])
-        if choix == "poison" and self.__poison==True:
+            del (self.__joueur_mort[-1])
+        if choix == "poison" and self.__poison == True:
             self.__poison = False
-            print("qui veux tu tuer entre: " + str(liste_player_alive) )
+            print("qui veux tu tuer entre: " + str(liste_player_alive))
             tue = input()
+            while tue == sorciere:
+                print("qui veux tu tuer entre: " + str(liste_player_alive))
+                tue = input()
             self.__joueur_mort.append(tue)
             self.__player[int(tue[1])].set_is_alive(0)
+
+            # self.__joueur_mort.append(vote)
 
 
     def create_game_player(self, nb_player: int) -> object:
