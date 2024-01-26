@@ -140,8 +140,9 @@ class Jeux:
         for players in self.get_players() :
             if players.get_role() == 'voleur' and players.get_is_alive() == 1:
                 print('le voleur se reveille et designe un joueur')
-                player_x = players.vote()
+                player_x = players.vote(self.get_players())
                 role_player_designe = player_x.get_role() #recupère le role du joueur designe
+                print(players.get_name()+ " est devenue " +role_player_designe)
                 players.set_role(role_player_designe) #modifier le role du joueur designe
                 player_x.set_role("voleur")#modifier le role du voleur
 
