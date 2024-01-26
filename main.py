@@ -39,7 +39,7 @@ class Main:
             choix = input("Vous pouvez choisir 'poison' ou ne rien faire. Entrez votre choix: ")
 
         elif self.__sauve:
-            choix = input("Vous pouvez choisir 'sauve' ou ne rien faire. Entrez votre choix: ")
+            choix = input("Vous pouvez choisir 'sauve' ou ne rien . Entrez votre choix: ")
         else:
             choix = None
         return choix
