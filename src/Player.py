@@ -20,7 +20,7 @@ class Player:
     def set_role(self, value: str) -> None:
         self.__role = value
 
-    def vote(self, all_Player) -> Player:
+    def vote(self, all_Player):
         while 1:
             name = input()
             for players in all_Player:
