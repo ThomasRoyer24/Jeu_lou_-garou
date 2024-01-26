@@ -31,6 +31,19 @@ class Main:
         player.set_is_alive(0)
         self.add_joueur_mort(player)
 
+    def condition_sorciere(self) -> str:
+        if self.__poison and self.__sauve:
+            choix = input("Vous pouvez choisir 'poison' ou 'sauve'. Entrez votre choix: ")
+
+        elif self.__poison:
+            choix = input("Vous pouvez choisir 'poison' ou ne rien faire. Entrez votre choix: ")
+
+        elif self.__sauve:
+            choix = input("Vous pouvez choisir 'sauve' ou ne rien faire. Entrez votre choix: ")
+        else:
+            choix = None
+        return choix
+
     def sorciere(self) -> None: #un bouton sauve avec une fonction qui verifie que sauve est true et un bouton qui affiche nom_joueur mort et Yes
 
         choix = self.condition_sorciere()
