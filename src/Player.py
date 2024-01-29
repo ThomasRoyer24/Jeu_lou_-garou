@@ -22,6 +22,12 @@ class Player:
 
     def vote(self, all_Player):
         while 1:
+            liste_player_alive = []
+            for player in all_Player:
+                if player.get_is_alive() == 1 and player.get_name() != self.get_name():
+                    liste_player_alive.append(player.get_name())
+            print(self.get_name()+ " <--> "+ self.get_role() +": Vous pouvez voter pour : " + str(liste_player_alive))
+
             name = input()
             for players in all_Player:
                 if players.get_name() == name and players.get_is_alive() == 1:
