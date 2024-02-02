@@ -28,7 +28,7 @@ class Client:
                 message = data.decode('utf-8')
                 print(message)
             except Exception as e:
-                print(f"Error receiving message from server: {e}")
+                print(f"Error receiving message from servers: {e}")
                 break
 
 def main():
