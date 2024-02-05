@@ -1,7 +1,7 @@
-import base64
 import socket
 import threading
-import os
+import requests
+import json
 class Client:
 
     def __init__(self, host, port):
@@ -35,9 +35,7 @@ class Client:
 
 
 
-import requests
-import base64
-import json
+
 def get_github_file_content():
     # Construire l'URL de l'API GitHub pour obtenir le contenu du fichier
     api_url = "https://github.com/ThomasRoyer24/Jeu_lou_garou/blob/main/src/master_ip.txt"
