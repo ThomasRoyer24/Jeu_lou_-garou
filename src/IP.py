@@ -21,3 +21,4 @@ class ip_adress():
         file = open(file_path, "w")
         file.write(ip_adresse)
 
+
