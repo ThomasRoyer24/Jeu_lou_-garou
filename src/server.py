@@ -5,7 +5,7 @@ import tkinter as tk
 
 class Server:
 
-    def __init__(self, host, port, nb_player):
+    def __init__(self, host, port, nb_player, nb_bots, nb_total):
         self.nb_players = nb_player
         self.host = host
         self.port = port
@@ -17,7 +17,8 @@ class Server:
         self.messages = {}  # Shared list for messages
         self.clients_player = {}
         self.filename = "src/master_ip.txt"
-
+        self.bots = nb_bots
+        self.players_total = nb_total
     def handle_client(self, client_socket):
         try:
             while True:
@@ -54,11 +55,10 @@ class Server:
         for elt in range(len(self.clients)):
             self.clients_player["p" + str(elt)] = self.clients[elt]
             self.messages[self.clients[elt]] = None
-        print(self.clients_player)
 
     def start_game(self, server):
         if len(self.clients) == self.nb_players:
-            self.game = Jeux(self.nb_players, server)
+            self.game = Jeux(self.nb_players, self.bots, server)
             self.game.create_game_player(self.nb_players)
             self.game_thread = threading.Thread(target=self.game_loop)
             self.game_thread.start()
@@ -91,12 +91,17 @@ class Server:
 
 def activation():
 
-    print("Vous devez choisir entre 7 et 16 joueurs")
-    nb_players = int(input("Number of players: "))  # Specify the number of players
-    while nb_players < 7 or nb_players > 16:
-        print("Vous devez choisir entre 7 et 16 joueurs")
+    nb_total = 0
+    while nb_total < 7 or nb_total > 16:
+
+        print("Vous devez choisir combien de joueurs voulez-vous entre 7 et 16")
+        nb_total = int(input("Number of players: "))
+        print("Combien de vrais joueurs êtes vous entre : 1 et " + str(nb_total))
         nb_players = int(input("Number of players: "))
-    server = Server("0.0.0.0", 8080, nb_players)
+        nb_bots = nb_total - nb_players
+        nb_total = nb_players + nb_bots
+
+    server = Server("0.0.0.0", 8080, nb_players, nb_bots, nb_total)
     print(f"Server is listening on {server.host}:{server.port}")
 
 

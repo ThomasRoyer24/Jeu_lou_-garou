@@ -1,17 +1,20 @@
 import random
 from src.Player import Player
-
+from src.BOT import bot
 class Jeux:
 
-    def __init__(self, nb_player: int, server):
+    def __init__(self, nb_player: int, server, nb_bots:0):
         self.__joueur_mort = []
         self.__sauve = True
         self.__poison = True
         self.__name_role = {} # dico p0->loup p1->voyante...
         self.__vote = {}
         self.__loups_villageois = [] #list nombre de loup puis nombre de villageois
-        self.__player = self.create_game_player(nb_player)
+        self.__bots = {}
+        self.__nb_bots = nb_bots
+        self.__player = self.create_game_player(nb_player, nb_bots)
         self.__server = server
+
 
 
     def get_joueur_mort(self):
@@ -115,7 +118,7 @@ class Jeux:
 
             # self.__joueur_mort.append(vote)
 
-    def create_game_player(self, nb_player: int) -> object:
+    def create_game_player(self, nb_player: int, nb_bots) -> object:
         ordre_role = ["loups", "voyante", "chasseur", "sorciere", "voleur", "villageois"]
         DICO_NBJOUEURS = {7: (2, 1, 1, 1, 0, 2), 8: (2, 1, 1, 1, 0, 3), 9: (2, 1, 1, 1, 1, 3),
                                  10: (2, 1, 1, 1, 1, 4),11: (2, 1, 1, 1, 1, 5), 12: (2, 1, 2, 1, 1, 5),
@@ -124,15 +127,19 @@ class Jeux:
         result = []
         liste_player = []
         liste_role = []
+        nb_total = nb_player + nb_bots
         for key, value in DICO_NBJOUEURS.items():
-            if key == nb_player:
+            if key == nb_total:
                 self.__loups_villageois.append(DICO_NBJOUEURS[key][0])
                 self.__loups_villageois.append(nb_player-DICO_NBJOUEURS[key][0])
 
                 for i in range(nb_player+1):
                     #creation des noms des joueurs
                     liste_player.append("p"+str(i))
-
+                if nb_bots != 0:
+                    for bots in range(len(liste_player), len(liste_player) + nb_bots + 1):
+                        liste_player.append("p"+ str(bots))
+                        self.__bots["p"+str(bots)] = bot("p"+str(bots))
                 for elt in range(len(value)):
                     #cree une liste avec tous les roles et nombre d'apparition
                     liste_role.extend([ordre_role[elt]] * value[elt])
@@ -143,6 +150,7 @@ class Jeux:
                     liste_role.remove(random_role)
                     obj = Player(liste_player[elt], random_role)
                     self.__name_role[obj] = random_role
+                    self.__bots[liste_player[elt]].set_role(random_role)
                     result.append(obj)
 
         return result
