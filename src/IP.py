@@ -41,14 +41,15 @@ class ip_adress():
         os.makedirs(os.path.dirname(dest_path), exist_ok=True)
         os.replace(file_path, dest_path)
 
-        # Ajouter tous les fichiers modifiés pour le commit
-        repo.git.add("--all")
+        if repo.is_dirty():
+            # Ajouter tous les fichiers modifiés pour le commit
+            repo.git.add("--all")
 
-        # Effectuer le commit
-        repo.git.commit(m="MAJ fichier master_ip")
+            # Effectuer le commit
+            repo.git.commit(m="MAJ fichier master_ip")
 
-        # Pousser les modifications vers GitHub
-        repo.git.push('origin', "main")
+            # Pousser les modifications vers GitHub
+            repo.git.push('origin', "main")
 
 
 
