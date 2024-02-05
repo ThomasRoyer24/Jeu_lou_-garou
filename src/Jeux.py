@@ -109,6 +109,7 @@ class Jeux:
             if self.__sauve:
                 liste.append("sauve")
             liste.append("rien")
+            print(liste)
             choix = random.choice(liste)
         else:
             choix = self.condition_sorciere(players)
@@ -325,7 +326,7 @@ class Jeux:
                 if self.__name_bots[players.get_name()] == "bot":
                     liste = []
                     for others in self.get_players():
-                        if others.get_role() != 'chasseur' and others.get_is_alive() == 1:
+                        if others.get_role() != players.get_role() and others.get_is_alive() == 1:
                             liste.append(others)
                     for elt in liste:
                         if self.__bots[players.get_name()].get_choix_nice() == elt.get_name() and self.__bots[players.get_name()].get_choix_nice() != None:
@@ -345,6 +346,23 @@ class Jeux:
                     self.set_vote(accuse)
         joueur_mort_vote = max(self.get_vote(), key=self.get_vote().get)
         self.kill(joueur_mort_vote)
+        for joueur in self.__joueur_mort:
+            if joueur.get_role() == "chasseur":
+                if self.__name_bots[joueur.get_name()] == "bot":
+                    liste = []
+                    for others in self.get_players():
+                        if others.get_role() != 'chasseur' and others.get_is_alive() == 1:
+                            liste.append(others)
+                    joueur_choisi = random.choice(liste)
+                    print(joueur_choisi.get_name() + " est tué par le chasseur")
+                    self.__server.broadcast_message(joueur_choisi.get_name() + " est tué par le chasseur")
+                    self.kill(joueur_choisi)
+                else:
+                    client_socket = self.__server.get_client_player()
+                    client_socket = client_socket[joueur.get_name()]
+                    self.__server.personal_messages(joueur.vote(self.get_players()), joueur.get_name())
+                    victime_chasseur = self.vote_verif(client_socket, joueur.get_name())
+                    self.kill(victime_chasseur)
         self.empty_joueur_mort()
         self.__server.broadcast_message("Meneur <--> Le joueur " + joueur_mort_vote.get_name() + " est mort, il etait " + joueur_mort_vote.get_role()+ "\n")
         self.__server.personal_messages("\n" + joueur_mort_vote.get_name() + " <--> vous etes mort suite à la majorité des votes \n",joueur_mort_vote.get_name())
