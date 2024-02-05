@@ -221,6 +221,7 @@ class Jeux:
                         liste = []
                         if others.get_role() != 'loups' and others.get_is_alive() == 1:
                             liste.append(others)
+                    print(liste)
                     joueur_choisi = random.choice(liste)
                     self.set_vote(joueur_choisi)
                 else:
