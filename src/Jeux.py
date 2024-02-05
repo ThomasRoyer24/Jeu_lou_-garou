@@ -328,12 +328,11 @@ class Jeux:
                         if others.get_role() != 'chasseur' and others.get_is_alive() == 1:
                             liste.append(others)
                     for elt in liste:
-                        if self.__bots.get_choix_nice() == elt.get_name() and self.__bots.get_choix_nice() != None:
+                        if self.__bots[players.get_name()].get_choix_nice() == elt.get_name() and self.__bots[players.get_name()].get_choix_nice() != None:
                             del (liste[elt])
-                        if self.__bots.get_choix_mechants() == elt.get_name() and self.__bots.get_choix_nice() != None:
+                        if self.__bots[players.get_name()].get_choix_mechants() == elt.get_name() and self.__bots[players.get_name()].get_choix_nice() != None:
                             liste = []
                             liste.append(elt)
-                    print(liste)
                     joueur_choisi = random.choice(liste)
                     print(players.get_name() + " a voté pour " + joueur_choisi.get_name())
                     self.set_vote(joueur_choisi)
