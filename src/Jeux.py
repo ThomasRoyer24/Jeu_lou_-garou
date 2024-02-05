@@ -3,7 +3,7 @@ from src.Player import Player
 from src.BOT import bot
 class Jeux:
 
-    def __init__(self, nb_player: int, nb_bots:0, server : object):
+    def __init__(self, nb_player: int, nb_bots: int, server : object):
         self.__joueur_mort = []
         self.__sauve = True
         self.__poison = True
@@ -171,9 +171,7 @@ class Jeux:
                     self.__name_role[obj] = random_role
                     if self.__name_bots[liste_player[elt]] == "bot":
                         self.__bots[liste_player[elt]].set_role(random_role)
-                    print(obj.get_is_alive())
                     result.append(obj)
-
         return result
 
     def game(self):

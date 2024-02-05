@@ -64,7 +64,6 @@ class Server:
             self.game_thread.start()
 
     def game_loop(self):
-        print(self.game.finish())
         while not self.game.finish():
             self.game.game()
 
