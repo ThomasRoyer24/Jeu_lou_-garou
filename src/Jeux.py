@@ -3,7 +3,7 @@ from src.Player import Player
 from src.BOT import bot
 class Jeux:
 
-    def __init__(self, nb_player: int, server, nb_bots:0):
+    def __init__(self, nb_player: int, nb_bots:0, server : object):
         self.__joueur_mort = []
         self.__sauve = True
         self.__poison = True
@@ -118,7 +118,7 @@ class Jeux:
 
             # self.__joueur_mort.append(vote)
 
-    def create_game_player(self, nb_player: int, nb_bots) -> object:
+    def create_game_player(self, nb_player: int, nb_bots: int) -> object:
         ordre_role = ["loups", "voyante", "chasseur", "sorciere", "voleur", "villageois"]
         DICO_NBJOUEURS = {7: (2, 1, 1, 1, 0, 2), 8: (2, 1, 1, 1, 0, 3), 9: (2, 1, 1, 1, 1, 3),
                                  10: (2, 1, 1, 1, 1, 4),11: (2, 1, 1, 1, 1, 5), 12: (2, 1, 2, 1, 1, 5),
