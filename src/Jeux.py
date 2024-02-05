@@ -118,7 +118,7 @@ class Jeux:
             self.__sauve = False
             name = int(self.__joueur_mort[-1].get_name()[1])
             self.__player[name].set_is_alive(1)
-            self.__bots[players.get_name()].choix_gentil(self.__joueur_mort[-1].get_name())
+            self.__bots[players.get_name()].set_choix_gentil(self.__joueur_mort[-1].get_name())
             del (self.__joueur_mort[-1])
         if choix == "poison" and self.__poison == True:
             self.__poison = False
@@ -197,7 +197,7 @@ class Jeux:
                     joueur_choisi = random.choice(liste)
                     print(players.get_name() + " <--> a choisi " + joueur_choisi.get_name() + " qui est : " + joueur_choisi.get_role())
                     if joueur_choisi.get_role() == "loups":
-                        self.__bots[players.get_name()].choix_mechants(joueur_choisi.get_name())
+                        self.__bots[players.get_name()].set_choix_mechants(joueur_choisi.get_name())
                     else:
                         self.__bots[players.get_name()].choix_gentil(joueur_choisi.get_name())
 

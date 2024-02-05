@@ -19,8 +19,8 @@ class bot:
 
     def get_choix_mechants(self):
         return self.choix_mechants
-    def choix_mechants(self, name):
+    def set_choix_mechants(self, name):
         self.choix = name
 
-    def choix_gentil(self, name):
+    def set_choix_gentil(self, name):
         self.choix_gentil = name
