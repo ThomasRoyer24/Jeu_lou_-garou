@@ -93,13 +93,13 @@ def activation():
 
     nb_total = 0
     while nb_total < 7 or nb_total > 16:
-
         print("Vous devez choisir combien de joueurs voulez-vous entre 7 et 16")
         nb_total = int(input("Number of players: "))
+    nb_players = 0
+    while nb_players <= nb_total :
         print("Combien de vrais joueurs êtes vous entre : 1 et " + str(nb_total))
         nb_players = int(input("Number of players: "))
-        nb_bots = nb_total - nb_players
-        nb_total = nb_players + nb_bots
+    nb_bots = nb_total - nb_players
 
     server = Server("0.0.0.0", 8080, nb_players, nb_bots, nb_total)
     print(f"Server is listening on {server.host}:{server.port}")
