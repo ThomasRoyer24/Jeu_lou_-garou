@@ -59,7 +59,7 @@ class Server:
     def start_game(self, server):
         if len(self.clients) == self.nb_players:
             self.game = Jeux(self.nb_players, self.bots, server)
-            self.game.create_game_player(self.nb_players)
+            self.game.create_game_player(self.nb_players, self.bots)
             self.game_thread = threading.Thread(target=self.game_loop)
             self.game_thread.start()
 
