@@ -91,7 +91,6 @@ def activation():
 
     print("Vous devez choisir entre 7 et 16 joueurs")
     nb_players = int(input("Number of players: "))  # Specify the number of players
-    print(nb_players)
     while nb_players < 7 or nb_players > 16:
         print("Vous devez choisir entre 7 et 16 joueurs")
         nb_players = int(input("Number of players: "))

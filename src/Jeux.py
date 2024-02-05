@@ -47,25 +47,25 @@ class Jeux:
         client_socket = client_socket[players.get_name()]
 
         if self.__poison and self.__sauve:
-            self.__server.personal_messages("Le joueur mort est : " + self.__joueur_mort[-1].get_name() + "\n", players.get_name())
+            self.__server.personal_messages(players.get_name() + " <--> Le joueur mort est : " + self.__joueur_mort[-1].get_name() + "\n", players.get_name())
             print("Le joueur mort est : " + self.__joueur_mort[-1].get_name())
-            self.__server.personal_messages("Vous pouvez choisir 'poison' ou 'sauve'. Entrez votre choix: \n", players.get_name())
+            self.__server.personal_messages(players.get_name() + " <--> Vous pouvez choisir 'poison' ou 'sauve'\n Entrez votre choix: ", players.get_name())
             print("Vous pouvez choisir 'poison' ou 'sauve'. Entrez votre choix: ")
             choix = self.__server.get_messages(client_socket)
             while choix == None:
                 choix = self.__server.get_messages(client_socket)
 
         elif self.__poison:
-            self.__server.personal_messages("Vous pouvez choisir 'poison' ou ne rien faire \n. Entrez votre choix: ", players.get_name())
+            self.__server.personal_messages(players.get_name() + " <--> Vous pouvez choisir 'poison' ou ne rien faire \n Entrez votre choix: ", players.get_name())
             print("Vous pouvez choisir 'poison' ou ne rien faire. Entrez votre choix: ")
             choix = self.__server.get_messages(client_socket)
             while choix == None:
                 choix = self.__server.get_messages(client_socket)
 
         elif self.__sauve:
-            self.__server.personal_messages("Le joueur mort est : " + self.__joueur_mort[-1].get_name() + "\n",players.get_name())
+            self.__server.personal_messages(players.get_name() + " <--> Le joueur mort est : " + self.__joueur_mort[-1].get_name() + "\n",players.get_name())
             print("Le joueur mort est : " + self.__joueur_mort[-1].get_name())
-            self.__server.personal_messages("Vous pouvez choisir 'sauve' ou ne rien \n. Entrez votre choix: ",players.get_name())
+            self.__server.personal_messages(players.get_name() + " <--> Vous pouvez choisir 'sauve' ou ne rien \n. Entrez votre choix: ",players.get_name())
             print("Vous pouvez choisir 'sauve' ou ne rien . Entrez votre choix: ")
             choix = self.__server.get_messages(client_socket)
             while choix == None:
@@ -150,47 +150,53 @@ class Jeux:
     def game(self):
 
         for players in self.get_players():
-            self.__server.personal_messages("\n" + players.get_name() + " tu as le rôle de : " + players.get_role(), players.get_name())
+            self.__server.personal_messages("\n" + "Meneur <--> " + players.get_name() + " tu as le rôle de : " + players.get_role(), players.get_name())
             print(players.get_name() + " a le role de : " + players.get_role())
 
-        self.__server.broadcast_message('le village s endort')
+        self.__server.broadcast_message('Meneur <--> le village s endort')
         print('le village s endort')
 
 # ----------------------------------------------Voyante------------------------------------------------------------------
 
+        self.__server.broadcast_message('Meneur <--> Les Loups-Garous se réveillent, se reconnaissent et désignent une nouvelle victime !!!')
         for players in self.get_players() :
             if players.get_role() == 'voyante' and players.get_is_alive() == 1:
-                self.__server.personal_messages(players.get_name() + '<--> la Voyante se réveille, et désigne un joueur dont elle veut sonder la véritable personnalité !', players.get_name())
                 print('la Voyante se réveille, et désigne un joueur dont elle veut sonder la véritable personnalité !')
                 client_socket = self.__server.get_client_player()
                 client_socket = client_socket[players.get_name()]
                 self.__server.personal_messages(players.vote(self.get_players()), players.get_name())
                 player_x = self.vote_verif(client_socket, players.get_name())
-                self.__server.personal_messages(players.get_name() + '<--> le role de '+ player_x.get_name() +' est ' + player_x.get_role(), players.get_name())
+                self.__server.personal_messages(players.get_name() + ' <--> le role de '+ player_x.get_name() +' est ' + player_x.get_role(), players.get_name())
                 print('le role de '+ player_x.get_name() +' est ' + player_x.get_role())
                 print('la voyante se rendort')
-                self.__server.broadcast_message('la voyante se rendort')
+                self.__server.broadcast_message('Meneur <--> La voyante se rendort \n')
+            else:
+                self.__server.personal_messages('<---------------------------------------VOUS DORMEZ zzzzzzzz----------------------------->' + "\n", players.get_name())
 #----------------------------------------------Loup------------------------------------------------------------------
-        self.__server.broadcast_message('les Loups-Garous se réveillent, se reconnaissent et désignent une nouvelle victime !!!')
+        self.__server.broadcast_message('Meneur <--> Les Loups-Garous se réveillent, se reconnaissent et désignent une nouvelle victime !!!')
         print('les Loups-Garous se réveillent, se reconnaissent et désignent une nouvelle victime !!!')
         for players in self.get_players() :
             if players.get_role() == 'loups' and players.get_is_alive() == 1:
+                for partenaire in self.get_players():
+                    if partenaire.get_role() == "loups" and players.get_name() != partenaire.get_name():
+                        self.__server.personal_messages("\n" + players.get_name() + " <--> l autre joueur qui est loups avec vous est : " + partenaire.get_name() + "\n", players.get_name())
                 client_socket = self.__server.get_client_player()
                 client_socket = client_socket[players.get_name()]
                 self.__server.personal_messages(players.vote(self.get_players()), players.get_name())
                 player_x = self.vote_verif(client_socket, players.get_name())
-                self.__server.personal_messages(players.get_name() + "<--> vous avez voté : " + player_x.get_name(), players.get_name())
+                self.__server.personal_messages(players.get_name() + " <--> vous avez voté : " + player_x.get_name(), players.get_name())
                 self.set_vote(player_x)
+            else:
+                self.__server.personal_messages('<---------------------------------------VOUS DORMEZ zzzzzzzz----------------------------->' + "\n", players.get_name())
         self.kill(max(self.get_vote(), key=self.get_vote().get))
         self.empty_vote()
-        self.__server.broadcast_message("les loups se rendorment")
+        self.__server.broadcast_message("Meneur <--> Les loups se rendorment")
         print('les loups se rendorment')
 
 #----------------------------------------------Voleur------------------------------------------------------------------
-
+        self.__server.broadcast_message("Meneur <--> Le voleur se reveille et designe un joueur\n")
         for players in self.get_players() :
             if players.get_role() == 'voleur' and players.get_is_alive() == 1:
-                self.__server.broadcast_message("le voleur se reveille et designe un joueur\n")
                 print('le voleur se reveille et designe un joueur\n')
                 client_socket = self.__server.get_client_player()
                 client_socket = client_socket[players.get_name()]
@@ -202,26 +208,31 @@ class Jeux:
                 players.set_role(role_player_designe) #modifier le role du joueur designe
                 player_x.set_role("voleur")#modifier le role du voleur
                 break
+            else:
+                self.__server.personal_messages('<---------------------------------------VOUS DORMEZ zzzzzzzz----------------------------->' + "\n",players.get_name())
 
 #----------------------------------------------Sorciere------------------------------------------------------------------
 
-        self.__server.broadcast_message("la sorciere se reveille\n")
+        self.__server.broadcast_message("Meneur <--> La sorciere se reveille\n")
         for players in self.get_players() :
             if players.get_role() == 'sorciere' and players.get_is_alive() == 1:
                 self.sorciere(players)
+            else:
+                self.__server.personal_messages('<---------------------------------------VOUS DORMEZ zzzzzzzz----------------------------->' + "\n",players.get_name())
 
 #----------------------------------------------Jour------------------------------------------------------------------
         if self.finish() == 1:
             return 1
         self.__server.set_messages()
-        self.__server.broadcast_message("C’est le matin, le village se réveille\n")
+        self.__server.broadcast_message("Meneur <--> C’est le matin, le village se réveille\n")
         print("C’est le matin, le village se réveille")
         if not self.__joueur_mort:
-            self.__server.broadcast_message("Il n'y a pas eu de mort\n")
+            self.__server.broadcast_message("Meneur <--> Il n'y a pas eu de mort\n")
             print("Il n'y a pas eu de mort.")
         else:
             for joueur in self.__joueur_mort:
-                self.__server.broadcast_message(" Le joueur " + joueur.get_name() + " est mort, il etait " + joueur.get_role() + "\n")
+                self.__server.broadcast_message("Meneur <--> Le joueur " + joueur.get_name() + " est mort, il etait " + joueur.get_role() + "\n")
+                self.__server.personal_messages("--------------------------Tu es mort-----------------------\n", joueur.get_name())
                 print("le joueur " + joueur.get_name() + " est mort, il etait "+joueur.get_role())
                 if joueur.get_role() == 'chasseur':
                     client_socket = self.__server.get_client_player()
@@ -231,7 +242,7 @@ class Jeux:
                     self.kill(victime_chasseur)
             self.empty_joueur_mort()
 
-        self.__server.broadcast_message("Les joueurs doivent éliminer un joueur suspecté d’être un Loup-Garou\n")
+        self.__server.broadcast_message("Meneur <--> Les joueurs doivent éliminer un joueur suspecté d’être un Loup-Garou\n")
         print("Les joueurs doivent éliminer un joueur suspecté d’être un Loup-Garou\n")
         for players in self.get_players():
             if players.get_is_alive() == 1:
@@ -239,12 +250,12 @@ class Jeux:
                 client_socket = client_socket[players.get_name()]
                 self.__server.personal_messages(players.vote(self.get_players()), players.get_name())
                 accuse = self.vote_verif(client_socket, players.get_name())
-                self.__server.personal_messages(players.get_name() + "<--> vous avez voté : " + accuse.get_name(), players.get_name())
+                self.__server.personal_messages(players.get_name() + " <--> vous avez voté : " + accuse.get_name(), players.get_name())
                 self.set_vote(accuse)
         joueur_mort_vote = max(self.get_vote(), key=self.get_vote().get)
         self.kill(joueur_mort_vote)
         self.empty_joueur_mort()
-        self.__server.broadcast_message("le joueur " + joueur_mort_vote.get_name() + " est mort, il etait " + joueur_mort_vote.get_role()+ "\n")
+        self.__server.broadcast_message("Meneur <--> Le joueur " + joueur_mort_vote.get_name() + " est mort, il etait " + joueur_mort_vote.get_role()+ "\n")
         self.__server.personal_messages("\n" + joueur_mort_vote.get_name() + " <--> vous etes mort suite à la majorité des votes",joueur_mort_vote.get_name())
         print("le joueur " + joueur_mort_vote.get_name() + " est mort, il etait " + joueur_mort_vote.get_role())
         self.empty_vote()
@@ -263,11 +274,11 @@ class Jeux:
                 loups_mort +=1
 
         if loups_mort == self.__loups_villageois[0]:
-            self.__server.broadcast_message("\n Les villageois ont gagné")
+            self.__server.broadcast_message("\n Meneur <--> Les villageois ont gagné Youpiii")
             print("Les villageois ont gagné")
             return 1
         if villageois_mort == self.__loups_villageois[1]:
-            self.__server.broadcast_message("\n Les loups ont gagné")
+            self.__server.broadcast_message("\n Meneur <--> Les loups ont gagné Bouhhhh")
             print("Les loups ont gagné")
             return 1
         return 0

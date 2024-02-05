@@ -16,6 +16,6 @@ class ip_adress():
 
     def ecrit_ip(self):
         ip_adresse = self.get_ip_address()
-        file = open("/src/master_ip.txt", "w")
+        file = open("C:/Users/Blandine/Tp_python_avance/Jeu_lou_-garou/src/master_ip.txt", "w")
         file.write(ip_adresse)
 
