@@ -322,7 +322,7 @@ class Jeux:
         print("Les joueurs doivent éliminer un joueur suspecté d’être un Loup-Garou\n")
         for players in self.get_players():
             if players.get_is_alive() == 1:
-                if self.__name_bots[joueur.get_name()] == "bot":
+                if self.__name_bots[players.get_name()] == "bot":
                     liste = []
                     for others in self.get_players():
                         if others.get_role() != 'chasseur' and others.get_is_alive() == 1:
