@@ -117,7 +117,8 @@ class Jeux:
             self.__sauve = False
             name = int(self.__joueur_mort[-1].get_name()[1])
             self.__player[name].set_is_alive(1)
-            self.__bots[players.get_name()].set_choix_gentil(self.__joueur_mort[-1].get_name())
+            if self.__name_bots[players.get_name()] == "bot":
+                self.__bots[players.get_name()].set_choix_gentil(self.__joueur_mort[-1].get_name())
             del (self.__joueur_mort[-1])
         if choix == "poison" and self.__poison == True:
             self.__poison = False
