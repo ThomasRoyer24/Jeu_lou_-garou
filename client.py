@@ -36,34 +36,32 @@ class Client:
 
 
 import requests
-
+import base64
+import json
 def get_github_file_content():
     # Construire l'URL de l'API GitHub pour obtenir le contenu du fichier
-    api_url = "https://raw.githubusercontent.com/ThomasRoyer24/Jeu_lou_garou/main/src/master_ip.txt"
+    api_url = "https://github.com/ThomasRoyer24/Jeu_lou_garou/blob/main/src/master_ip.txt"
 
     # Faire une requête GET à l'API GitHub
-    response = requests.get(api_url)
 
-    # Vérifier si la requête a réussi (code 200)
-    if response.status_code == 200:
-        # Récupérer le contenu du fichier
-        content = response.text
-        print(content)
+    with requests.get(api_url) as response:
+        # Vérifier si la requête a réussi (code 200)
+        if response.status_code == 200:
+            data = json.loads(response.text)
 
-        return content
-    else:
-        # Afficher un message d'erreur si la requête a échoué
-        print(f"Erreur lors de la récupération du fichier : {response.status_code}")
-        return None
+            # Extraire le contenu brut du fichier
+            raw_lines = data["payload"]["blob"]["rawLines"]
+
+            return raw_lines[0]
+        else:
+            # Afficher un message d'erreur si la requête a échoué
+            print(f"Erreur lors de la récupération du fichier : {response.status_code}")
+            return None
 
 
 
 def main():
-    print(get_github_file_content())
-    current_dir = os.path.dirname(os.path.abspath(__file__))
-    file_path = os.path.join(current_dir, "src", "master_ip.txt")
-    server_ip = open(file_path, "r").read().strip()
-    Client(server_ip, 8080)
+    Client(get_github_file_content(), 8080)
 
 if __name__ == "__main__":
     main()
