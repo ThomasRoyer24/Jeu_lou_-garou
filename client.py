@@ -10,6 +10,7 @@ class Client:
         self.client.connect((host, port))
         self.receive_thread = threading.Thread(target=self.receive_messages)
         self.receive_thread.start()
+        print("Vous êtes connecté au serveur")
 
         try:
             while True:
@@ -32,7 +33,7 @@ class Client:
                 break
 
 def main():
-    server_ip = "10.10.43.56"
+    server_ip = open("Master_ip.txt", "r").read().strip()
     Client(server_ip, 8080)
 
 if __name__ == "__main__":
