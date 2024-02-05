@@ -150,15 +150,15 @@ class Jeux:
     def game(self):
 
         for players in self.get_players():
-            self.__server.personal_messages("\n" + "Meneur <--> " + players.get_name() + " tu as le rôle de : " + players.get_role(), players.get_name())
+            self.__server.personal_messages("\n" + "Meneur <--> " + players.get_name() + " tu as le rôle de : " + players.get_role() + "\n", players.get_name())
             print(players.get_name() + " a le role de : " + players.get_role())
 
-        self.__server.broadcast_message('Meneur <--> le village s endort')
+        self.__server.broadcast_message('Meneur <--> le village s endort \n')
         print('le village s endort')
 
 # ----------------------------------------------Voyante------------------------------------------------------------------
 
-        self.__server.broadcast_message('Meneur <--> Les Loups-Garous se réveillent, se reconnaissent et désignent une nouvelle victime !!!')
+        self.__server.broadcast_message('Meneur <--> La voyante se réveillent, se reconnaissent et désignent une nouvelle victime !!!')
         for players in self.get_players() :
             if players.get_role() == 'voyante' and players.get_is_alive() == 1:
                 print('la Voyante se réveille, et désigne un joueur dont elle veut sonder la véritable personnalité !')
@@ -190,7 +190,7 @@ class Jeux:
                 self.__server.personal_messages('<---------------------------------------VOUS DORMEZ zzzzzzzz----------------------------->' + "\n", players.get_name())
         self.kill(max(self.get_vote(), key=self.get_vote().get))
         self.empty_vote()
-        self.__server.broadcast_message("Meneur <--> Les loups se rendorment")
+        self.__server.broadcast_message("Meneur <--> Les loups se rendorment \n")
         print('les loups se rendorment')
 
 #----------------------------------------------Voleur------------------------------------------------------------------

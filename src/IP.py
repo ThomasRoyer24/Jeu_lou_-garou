@@ -6,7 +6,7 @@ class ip_adress():
             # Créez une connexion à un serveur fictif
             # (le choix de l'adresse 8.8.8.8 est arbitraire, c'est l'adresse IP du serveur DNS public de Google)
             s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-            s.connect(('8.8.8.8', 80))
+            s.connect(('8.8.8.8', 8080))
             ip_address = s.getsockname()[0]
             s.close()
             return ip_address

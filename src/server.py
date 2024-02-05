@@ -27,9 +27,7 @@ class Server:
                 self.messages[client_socket] = user_input
                 if not user_input:  # Si le client se déconnecte, sortir de la boucle
                     break
-                with open(self.filename, 'r') as file:
-                    content = file.read()
-                    client_socket.send(content.encode('utf-8'))
+
         except Exception as e:
             print(f"Error handling client: {e}")
 
