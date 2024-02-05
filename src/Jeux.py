@@ -148,7 +148,7 @@ class Jeux:
         for key, value in DICO_NBJOUEURS.items():
             if key == nb_total:
                 self.__loups_villageois.append(DICO_NBJOUEURS[key][0])
-                self.__loups_villageois.append(nb_player-DICO_NBJOUEURS[key][0])
+                self.__loups_villageois.append(nb_total-DICO_NBJOUEURS[key][0])
                 for i in range(nb_player):
                     #creation des noms des joueurs
                     liste_player.append("p"+str(i))
@@ -365,6 +365,7 @@ class Jeux:
                 villageois_mort +=1
             if players.get_role() == 'loups' and players.get_is_alive() == 0:
                 loups_mort +=1
+        print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
         print(self.__loups_villageois)
         if loups_mort == self.__loups_villageois[0]:
             self.__server.broadcast_message("\n Meneur <--> Les villageois ont gagné Youpiii")
