@@ -221,7 +221,7 @@ class Jeux:
             print("Il n'y a pas eu de mort.")
         else:
             for joueur in self.__joueur_mort:
-                self.__server.broadcast_message("le joueur " + joueur.get_name() + " est mort, il etait "+joueur.get_role()+ "\n")
+                self.__server.broadcast_message(" Le joueur " + joueur.get_name() + " est mort, il etait " + joueur.get_role() + "\n")
                 print("le joueur " + joueur.get_name() + " est mort, il etait "+joueur.get_role())
                 if joueur.get_role() == 'chasseur':
                     client_socket = self.__server.get_client_player()
@@ -245,9 +245,10 @@ class Jeux:
         self.kill(joueur_mort_vote)
         self.empty_joueur_mort()
         self.__server.broadcast_message("le joueur " + joueur_mort_vote.get_name() + " est mort, il etait " + joueur_mort_vote.get_role()+ "\n")
+        self.__server.personal_messages("\n" + joueur_mort_vote.get_name() + " <--> vous etes mort suite à la majorité des votes",joueur_mort_vote.get_name())
         print("le joueur " + joueur_mort_vote.get_name() + " est mort, il etait " + joueur_mort_vote.get_role())
         self.empty_vote()
-
+        self.__server.set_messages()
         if self.finish() == 1:
             return 1
 

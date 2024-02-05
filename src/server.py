@@ -24,8 +24,17 @@ class Server:
                 user_input = client_socket.recv(1024).decode('utf-8')
                 print(user_input)
                 self.messages[client_socket] = user_input
+                if not user_input:  # Si le client se déconnecte, sortir de la boucle
+                    break
         except Exception as e:
             print(f"Error handling client: {e}")
+
+        finally:
+            # Supprimer le client déconnecté des listes
+            self.clients.remove(client_socket)
+            key_to_remove = next((key for key, value in self.clients_player.items() if value == client_socket), None)
+            if key_to_remove is not None:
+                del self.clients_player[key_to_remove]
 
     def set_messages(self):
         for key in self.messages.keys():
@@ -79,7 +88,13 @@ class Server:
 
 
 def activation():
+
+    print("Vous devez choisir entre 7 et 16 joueurs")
     nb_players = int(input("Number of players: "))  # Specify the number of players
+    print(nb_players)
+    while nb_players < 7 or nb_players > 16:
+        print("Vous devez choisir entre 7 et 16 joueurs")
+        nb_players = int(input("Number of players: "))
     server = Server("0.0.0.0", 8080, nb_players)
     print(f"Server is listening on {server.host}:{server.port}")
 
