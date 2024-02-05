@@ -329,7 +329,7 @@ class Jeux:
                             liste.append(others)
                     for elt in liste:
                         if self.__bots[players.get_name()].get_choix_nice() == elt.get_name() and self.__bots[players.get_name()].get_choix_nice() != None:
-                            del (liste[elt])
+                            liste.remove(elt)
                         if self.__bots[players.get_name()].get_choix_mechants() == elt.get_name() and self.__bots[players.get_name()].get_choix_nice() != None:
                             liste = []
                             liste.append(elt)
