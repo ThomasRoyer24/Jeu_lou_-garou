@@ -150,7 +150,7 @@ class Jeux:
                 self.__loups_villageois.append(DICO_NBJOUEURS[key][0])
                 self.__loups_villageois.append(nb_player-DICO_NBJOUEURS[key][0])
 
-                for i in range(nb_player+1):
+                for i in range(nb_player):
                     #creation des noms des joueurs
                     liste_player.append("p"+str(i))
                     self.__name_bots["p" + str(i)] = "joueur"
