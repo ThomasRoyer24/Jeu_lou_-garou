@@ -96,7 +96,7 @@ def activation():
         print("Vous devez choisir combien de joueurs voulez-vous entre 7 et 16")
         nb_total = int(input("Number of players: "))
     nb_players = 0
-    while nb_players < 1 and nb_players > nb_total:
+    while nb_players < 1 or nb_players > nb_total:
         print("Combien de vrais joueurs êtes vous entre : 1 et " + str(nb_total))
         nb_players = int(input("Number of players: "))
     nb_bots = nb_total - nb_players
