@@ -84,7 +84,6 @@ class Jeux:
         for player in self.__player:
             if player.get_is_alive() == 1:
                 liste_player_alive.append(player.get_name())
-        print(liste_player_alive)
         return liste_player_alive
 
     def vote_verif(self, client_socket, player):
@@ -333,6 +332,7 @@ class Jeux:
                         if self.__bots.get_choix_mechants() == elt.get_name() and self.__bots.get_choix_nice() != None:
                             liste = []
                             liste.append(elt)
+                    print(liste)
                     joueur_choisi = random.choice(liste)
                     print(players.get_name() + " a voté pour " + joueur_choisi.get_name())
                     self.set_vote(joueur_choisi)
@@ -359,14 +359,11 @@ class Jeux:
     def finish(self):
         loups_mort = 0
         villageois_mort = 0
-        print(self.get_players())
         for players in self.get_players() :
             if players.get_role() != 'loups' and players.get_is_alive() == 0:
                 villageois_mort +=1
             if players.get_role() == 'loups' and players.get_is_alive() == 0:
                 loups_mort +=1
-        print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
-        print(self.__loups_villageois)
         if loups_mort == self.__loups_villageois[0]:
             self.__server.broadcast_message("\n Meneur <--> Les villageois ont gagné Youpiii")
             print("Les villageois ont gagné")
