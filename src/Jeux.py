@@ -360,6 +360,7 @@ class Jeux:
     def finish(self):
         loups_mort = 0
         villageois_mort = 0
+        print(self.get_players())
         for players in self.get_players() :
             if players.get_role() != 'loups' and players.get_is_alive() == 0:
                 villageois_mort +=1
