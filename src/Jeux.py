@@ -47,25 +47,25 @@ class Jeux:
         client_socket = client_socket[players.get_name()]
 
         if self.__poison and self.__sauve:
-            self.__server.personal_messages("Le joueur mort est : " + self.__joueur_mort[-1].get_name(), players.get_name() + "\n")
+            self.__server.personal_messages("Le joueur mort est : " + self.__joueur_mort[-1].get_name() + "\n", players.get_name())
             print("Le joueur mort est : " + self.__joueur_mort[-1].get_name())
-            self.__server.personal_messages("Vous pouvez choisir 'poison' ou 'sauve'. Entrez votre choix: ", players.get_name() + "\n")
+            self.__server.personal_messages("Vous pouvez choisir 'poison' ou 'sauve'. Entrez votre choix: \n", players.get_name())
             print("Vous pouvez choisir 'poison' ou 'sauve'. Entrez votre choix: ")
             choix = self.__server.get_messages(client_socket)
             while choix == None:
                 choix = self.__server.get_messages(client_socket)
 
         elif self.__poison:
-            self.__server.personal_messages("Vous pouvez choisir 'poison' ou ne rien faire. Entrez votre choix: ", players.get_name() + "\n")
+            self.__server.personal_messages("Vous pouvez choisir 'poison' ou ne rien faire \n. Entrez votre choix: ", players.get_name())
             print("Vous pouvez choisir 'poison' ou ne rien faire. Entrez votre choix: ")
             choix = self.__server.get_messages(client_socket)
             while choix == None:
                 choix = self.__server.get_messages(client_socket)
 
         elif self.__sauve:
-            self.__server.personal_messages("Le joueur mort est : " + self.__joueur_mort[-1].get_name(),players.get_name() + "\n")
+            self.__server.personal_messages("Le joueur mort est : " + self.__joueur_mort[-1].get_name() + "\n",players.get_name())
             print("Le joueur mort est : " + self.__joueur_mort[-1].get_name())
-            self.__server.personal_messages("Vous pouvez choisir 'sauve' ou ne rien . Entrez votre choix: ",players.get_name() + "\n")
+            self.__server.personal_messages("Vous pouvez choisir 'sauve' ou ne rien \n. Entrez votre choix: ",players.get_name())
             print("Vous pouvez choisir 'sauve' ou ne rien . Entrez votre choix: ")
             choix = self.__server.get_messages(client_socket)
             while choix == None:
@@ -84,7 +84,7 @@ class Jeux:
 
     def vote_verif(self, client_socket, player):
         while 1:
-            name = self.__server.get_messages(client_socket)
+            name = None
             while name == None:
                 name = self.__server.get_messages(client_socket)
             for players in self.__player:
@@ -150,7 +150,7 @@ class Jeux:
     def game(self):
 
         for players in self.get_players():
-            self.__server.personal_messages(players.get_name() + " tu as le rôle de : " + players.get_role(), players.get_name())
+            self.__server.personal_messages("\n" + players.get_name() + " tu as le rôle de : " + players.get_role(), players.get_name())
             print(players.get_name() + " a le role de : " + players.get_role())
 
         self.__server.broadcast_message('le village s endort')
@@ -179,7 +179,7 @@ class Jeux:
                 client_socket = client_socket[players.get_name()]
                 self.__server.personal_messages(players.vote(self.get_players()), players.get_name())
                 player_x = self.vote_verif(client_socket, players.get_name())
-                self.__server.personal_messages(players.get_name() + "<--> vous avez voté : " + player_x, players.get_name())
+                self.__server.personal_messages(players.get_name() + "<--> vous avez voté : " + player_x.get_name(), players.get_name())
                 self.set_vote(player_x)
         self.kill(max(self.get_vote(), key=self.get_vote().get))
         self.empty_vote()
@@ -239,7 +239,7 @@ class Jeux:
                 client_socket = client_socket[players.get_name()]
                 self.__server.personal_messages(players.vote(self.get_players()), players.get_name())
                 accuse = self.vote_verif(client_socket, players.get_name())
-                self.__server.personal_messages(players.get_name() + "<--> vous avez voté : " + accuse,players.get_name())
+                self.__server.personal_messages(players.get_name() + "<--> vous avez voté : " + accuse.get_name(), players.get_name())
                 self.set_vote(accuse)
         joueur_mort_vote = max(self.get_vote(), key=self.get_vote().get)
         self.kill(joueur_mort_vote)

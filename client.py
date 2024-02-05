@@ -32,8 +32,8 @@ class Client:
                 break
 
 def main():
-    server_ip = open("master_ip.txt", "r").read().strip()
-    client = Client(server_ip, 8080)
+    server_ip = "10.10.43.56"
+    Client(server_ip, 8080)
 
 if __name__ == "__main__":
     main()

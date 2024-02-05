@@ -1,6 +1,7 @@
 import socket
 import threading
 from src.Jeux import Jeux
+import tkinter as tk
 
 class Server:
 
@@ -76,10 +77,12 @@ class Server:
     def get_client_player(self):
         return self.clients_player
 
-def main():
+
+def activation():
     nb_players = int(input("Number of players: "))  # Specify the number of players
     server = Server("0.0.0.0", 8080, nb_players)
     print(f"Server is listening on {server.host}:{server.port}")
+
 
     accept_thread = threading.Thread(target=server.accept_clients)
     accept_thread.start()
@@ -89,5 +92,4 @@ def main():
     server.start_game(server)
     server.game_thread.join()
 
-if __name__ == "__main__":
-    main()
+
