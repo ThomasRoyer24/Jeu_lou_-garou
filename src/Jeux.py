@@ -199,7 +199,7 @@ class Jeux:
                     if joueur_choisi.get_role() == "loups":
                         self.__bots[players.get_name()].set_choix_mechants(joueur_choisi.get_name())
                     else:
-                        self.__bots[players.get_name()].choix_gentil(joueur_choisi.get_name())
+                        self.__bots[players.get_name()].set_choix_gentil(joueur_choisi.get_name())
 
                 else:
                     client_socket = self.__server.get_client_player()
