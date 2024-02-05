@@ -1,5 +1,5 @@
 import socket
-
+import os
 class ip_adress():
     def get_ip_address(self):
         try:
@@ -15,7 +15,9 @@ class ip_adress():
             return None
 
     def ecrit_ip(self):
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        file_path = os.path.join(current_dir, "master_ip.txt")
         ip_adresse = self.get_ip_address()
-        file = open("src/master_ip.txt", "w")
+        file = open(file_path, "w")
         file.write(ip_adresse)
 

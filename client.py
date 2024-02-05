@@ -1,6 +1,6 @@
 import socket
 import threading
-
+import os
 class Client:
 
     def __init__(self, host, port):
@@ -35,7 +35,9 @@ class Client:
 
 
 def main():
-    server_ip = open("src/master_ip.txt", "r").read().strip()
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    file_path = os.path.join(current_dir, "src", "master_ip.txt")
+    server_ip = open(file_path, "r").read().strip()
     Client(server_ip, 8080)
 
 if __name__ == "__main__":
