@@ -171,6 +171,7 @@ class Jeux:
                     self.__name_role[obj] = random_role
                     if self.__name_bots[liste_player[elt]] == "bot":
                         self.__bots[liste_player[elt]].set_role(random_role)
+                    print(obj.get_is_alive())
                     result.append(obj)
 
         return result
