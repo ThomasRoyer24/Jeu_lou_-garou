@@ -149,7 +149,6 @@ class Jeux:
             if key == nb_total:
                 self.__loups_villageois.append(DICO_NBJOUEURS[key][0])
                 self.__loups_villageois.append(nb_player-DICO_NBJOUEURS[key][0])
-                print(self.__loups_villageois)
                 for i in range(nb_player):
                     #creation des noms des joueurs
                     liste_player.append("p"+str(i))
@@ -172,6 +171,7 @@ class Jeux:
                     if self.__name_bots[liste_player[elt]] == "bot":
                         self.__bots[liste_player[elt]].set_role(random_role)
                     result.append(obj)
+        print(self.__loups_villageois)
         return result
 
     def game(self):
