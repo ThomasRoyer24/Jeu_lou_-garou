@@ -20,7 +20,7 @@ class Server:
     def handle_client(self, client_socket):
         try:
             while True:
-                # Réception de la réponse du client
+                # Réception de la réponse du clients
                 user_input = client_socket.recv(1024).decode('utf-8')
                 print(user_input)
                 self.messages[client_socket] = user_input
