@@ -217,8 +217,8 @@ class Jeux:
         for players in self.get_players() :
             if players.get_role() == 'loups' and players.get_is_alive() == 1:
                 if self.__name_bots[players.get_name()] == "bot":
+                    liste = []
                     for others in self.get_players():
-                        liste = []
                         if others.get_role() != 'loups' and others.get_is_alive() == 1:
                             print("aaaaaaaaaaaaaa")
                             liste.append(others)
@@ -249,8 +249,8 @@ class Jeux:
         for players in self.get_players() :
             if players.get_role() == 'voleur' and players.get_is_alive() == 1:
                 if self.__name_bots[players.get_name()] == "bot":
+                    liste = []
                     for others in self.get_players():
-                        liste = []
                         if others.get_role() != 'voleur' and others.get_is_alive() == 1:
                             liste.append(others)
                     joueur_choisi = random.choice(liste)
@@ -304,8 +304,8 @@ class Jeux:
                 print("le joueur " + joueur.get_name() + " est mort, il etait "+joueur.get_role())
                 if joueur.get_role() == 'chasseur':
                     if self.__name_bots[joueur.get_name()] == "bot":
+                        liste = []
                         for others in self.get_players():
-                            liste = []
                             if others.get_role() != 'chasseur' and others.get_is_alive() == 1:
                                 liste.append(others)
                         joueur_choisi = random.choice(liste)
@@ -325,8 +325,8 @@ class Jeux:
         for players in self.get_players():
             if players.get_is_alive() == 1:
                 if self.__name_bots[joueur.get_name()] == "bot":
+                    liste = []
                     for others in self.get_players():
-                        liste = []
                         if others.get_role() != 'chasseur' and others.get_is_alive() == 1:
                             liste.append(others)
                     for elt in liste:
