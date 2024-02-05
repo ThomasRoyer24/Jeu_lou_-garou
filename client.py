@@ -33,7 +33,7 @@ class Client:
                 break
 
 def main():
-    server_ip = open("C:/Users/Blandine/Tp_python_avance/Jeu_lou_-garou/master_ip.txt", "r").read().strip()
+    server_ip = open("/src/master_ip.txt", "r").read().strip()
     Client(server_ip, 8080)
 
 if __name__ == "__main__":
