@@ -46,7 +46,7 @@ class ip_adress():
             repo.git.commit(m="MAJ fichier master_ip")
 
             # Pousser les modifications vers GitHub
-            repo.git.push('origin', "https://github.com/ThomasRoyer24/Jeu_lou_garou/blob/main/src")
+            repo.git.push('origin', "main")
 
 
 
