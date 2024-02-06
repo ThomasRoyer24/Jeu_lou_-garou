@@ -310,12 +310,15 @@ class Jeux:
                                 liste.append(others)
                         joueur_choisi = random.choice(liste)
                         print(joueur_choisi.get_name() + " est tué par le chasseur")
+                        self.__server.broadcast_message(joueur_choisi.get_name() + " est tué par le chasseur")
                         self.kill(joueur_choisi)
                     else:
                         client_socket = self.__server.get_client_player()
                         client_socket = client_socket[joueur.get_name()]
                         self.__server.personal_messages(joueur.vote(self.get_players()), joueur.get_name())
                         victime_chasseur = self.vote_verif(client_socket, joueur.get_name())
+                        print(victime_chasseur.get_name() + " est tué par le chasseur")
+                        self.__server.broadcast_message(victime_chasseur.get_name() + " est tué par le chasseur")
                         self.kill(victime_chasseur)
             self.empty_joueur_mort()
         if self.finish() == 1:
