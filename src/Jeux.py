@@ -221,6 +221,8 @@ class Jeux:
                     for others in self.get_players():
                         if others.get_role() != 'loups' and others.get_is_alive() == 1:
                             liste.append(others)
+                        if others.get_role() == "loups" and others.get_name() != players.get_name():
+                            self.__bots[players.get_name()].set_choix_gentil(others.get_name())
                     joueur_choisi = random.choice(liste)
                     self.set_vote(joueur_choisi)
                 else:
@@ -289,7 +291,7 @@ class Jeux:
 
 #----------------------------------------------Jour------------------------------------------------------------------
         if self.finish() == 1:
-            return 1
+            return 0
         self.__server.set_messages()
         self.__server.broadcast_message("Meneur <--> C’est le matin, le village se réveille\n")
         print("C’est le matin, le village se réveille")
@@ -318,7 +320,7 @@ class Jeux:
                         self.kill(victime_chasseur)
             self.empty_joueur_mort()
         if self.finish() == 1:
-            return 1
+            return 0
         self.__server.broadcast_message("Meneur <--> Les joueurs doivent éliminer un joueur suspecté d’être un Loup-Garou\n")
         print("Les joueurs doivent éliminer un joueur suspecté d’être un Loup-Garou\n")
         for players in self.get_players():
@@ -371,7 +373,7 @@ class Jeux:
         self.empty_vote()
         self.__server.set_messages()
         if self.finish() == 1:
-            return 1
+            return 0
 
 
     def finish(self):
