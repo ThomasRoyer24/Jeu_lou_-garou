@@ -216,6 +216,8 @@ class Jeux:
 
         for players in self.get_players() :
             if players.get_role() == 'loups' and players.get_is_alive() == 1:
+                self.__server.broadcast_message('Meneur <--> Les Loups-Garous se réveillent, se reconnaissent et désignent une nouvelle victime !!!')
+                print('les Loups-Garous se réveillent, se reconnaissent et désignent une nouvelle victime !!!')
                 if self.__name_bots[players.get_name()] == "bot":
                     liste = []
                     for others in self.get_players():
@@ -226,8 +228,6 @@ class Jeux:
                     joueur_choisi = random.choice(liste)
                     self.set_vote(joueur_choisi)
                 else:
-                    self.__server.broadcast_message('Meneur <--> Les Loups-Garous se réveillent, se reconnaissent et désignent une nouvelle victime !!!')
-                    print('les Loups-Garous se réveillent, se reconnaissent et désignent une nouvelle victime !!!')
                     for partenaire in self.get_players():
                         if partenaire.get_role() == "loups" and players.get_name() != partenaire.get_name():
                             self.__server.personal_messages("\n" + players.get_name() + " <--> l autre joueur qui est loups avec vous est : " + partenaire.get_name() + "\n", players.get_name())
@@ -350,30 +350,41 @@ class Jeux:
         self.kill(joueur_mort_vote)
         for joueur in self.__joueur_mort:
             if joueur.get_role() == "chasseur":
+                self.__server.broadcast_message("Meneur <--> Le joueur " + joueur.get_name() + " est mort, il etait " + joueur.get_role() + "\n")
+                print("le joueur " + joueur.get_name() + " est mort, il etait " + joueur.get_role())
                 if self.__name_bots[joueur.get_name()] == "bot":
                     liste = []
                     for others in self.get_players():
                         if others.get_role() != 'chasseur' and others.get_is_alive() == 1:
                             liste.append(others)
                     joueur_choisi = random.choice(liste)
-                    print(joueur_choisi.get_name() + " est tué par le chasseur")
+                    print(joueur_choisi.get_name() + " est tué par le chasseur \n")
                     self.__server.broadcast_message(joueur_choisi.get_name() + " est tué par le chasseur")
                     self.kill(joueur_choisi)
                 else:
+                    self.__server.personal_messages("\n" + joueur_mort_vote.get_name() + " <--> vous etes mort suite à la majorité des votes \n",joueur.get_name())
+                    self.__server.personal_messages("-----------------------------------------TU ES MORT-------------------------------------------\n",joueur.get_name())
                     client_socket = self.__server.get_client_player()
                     client_socket = client_socket[joueur.get_name()]
                     self.__server.personal_messages(joueur.vote(self.get_players()), joueur.get_name())
                     victime_chasseur = self.vote_verif(client_socket, joueur.get_name())
                     self.kill(victime_chasseur)
+                    self.__server.broadcast_message("Meneur <--> Le chasseur a tué " + victime_chasseur.get_name() + "\n")
+                    self.__server.personal_messages( "\n" + victime_chasseur.get_name() + " <--> vous etes mort à cause du chasseur \n",victime_chasseur.get_name())
+                    self.__server.personal_messages("-----------------------------------------TU ES MORT-------------------------------------------\n",victime_chasseur.get_name())
         self.empty_joueur_mort()
-        self.__server.broadcast_message("Meneur <--> Le joueur " + joueur_mort_vote.get_name() + " est mort, il etait " + joueur_mort_vote.get_role()+ "\n")
-        self.__server.personal_messages("\n" + joueur_mort_vote.get_name() + " <--> vous etes mort suite à la majorité des votes \n",joueur_mort_vote.get_name())
-        self.__server.personal_messages("-----------------------------------------TU ES MORT-------------------------------------------\n",joueur.get_name())
-        print("le joueur " + joueur_mort_vote.get_name() + " est mort, il etait " + joueur_mort_vote.get_role())
         self.empty_vote()
         self.__server.set_messages()
+
         if self.finish() == 1:
             return 0
+
+        vivant = []
+        for players in self.__get_players():
+            if players.get_is_alive() == 1:
+                vivant.append(players.get_name())
+        print("Il reste : " + str(vivant) + "encore en vie \n")
+        self.__server.broadcast_message("Il reste : " + str(vivant) + "encore en vie \n")
 
 
     def finish(self):
