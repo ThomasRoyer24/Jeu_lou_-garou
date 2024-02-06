@@ -30,8 +30,14 @@ class ip_adress():
         self.update_github_file(file_path)
 
     def update_github_file(self, file_path):
-        # Construire l'URL de l'API GitHub pour obtenir le contenu du fichier
-        api_url =  r"C:\Users\Blandine\Tp_python_avance\Jeu_lou_-garou"
+        # Récupérer le répertoire du script
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+
+        # Remonter d'un niveau pour obtenir le répertoire parent
+        parent_dir = os.path.dirname(script_dir)
+        parent_dir = os.path.dirname(parent_dir)
+        # Construire le chemin complet vers le répertoire souhaité
+        api_url = os.path.join(parent_dir, "Jeu_lou_-garou")
 
         repo = Repo(api_url)
 
