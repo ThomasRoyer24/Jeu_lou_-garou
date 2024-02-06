@@ -200,7 +200,7 @@ class Jeux:
                         self.__bots[players.get_name()].set_choix_mechants(joueur_choisi.get_name())
                     else:
                         self.__bots[players.get_name()].set_choix_gentil(joueur_choisi.get_name())
-
+                    self.__server.broadcast_message('Meneur <--> La voyante se rendort \n')
                 else:
                     client_socket = self.__server.get_client_player()
                     client_socket = client_socket[players.get_name()]
@@ -363,7 +363,7 @@ class Jeux:
                             liste.append(others)
                     joueur_choisi = random.choice(liste)
                     print(joueur_choisi.get_name() + " est tué par le chasseur \n")
-                    self.__server.broadcast_message(joueur_choisi.get_name() + " est tué par le chasseur")
+                    self.__server.broadcast_message(joueur_choisi.get_name() + " est tué par le chasseur\n")
                     if self.__name_bots[joueur_choisi.get_name()] != "bot":
                         self.__server.personal_messages("-----------------------------------------TU ES MORT-------------------------------------------\n",joueur_mort_vote.get_name())
                     self.kill(joueur_choisi)
