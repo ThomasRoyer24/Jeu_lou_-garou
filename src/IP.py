@@ -26,7 +26,23 @@ class ip_adress():
         file.write(ip_adresse)
         file.close()
         # Mettre à jour le fichier sur GitHub
+        #self.add_to_gitignore()
         self.update_github_file(file_path)
+
+    """def add_to_gitignore(self, directory):
+        gitignore_path = os.path.join(os.getcwd(), '.gitignore')
+
+        if not os.path.exists(gitignore_path):
+            with open(gitignore_path, 'w') as gitignore_file:
+                gitignore_file.write(f'{directory}/\n')
+            print(f'Added {directory}/ to .gitignore')
+        else:
+            with open(gitignore_path, 'a') as gitignore_file:
+                gitignore_file.write(f'{directory}/\n')
+            print(f'Appended {directory}/ to .gitignore')
+
+    if __name__ == "__main__":
+        add_to_gitignore('__pycache__')"""
 
     def update_github_file(self, file_path):
         # Construire l'URL de l'API GitHub pour obtenir le contenu du fichier
