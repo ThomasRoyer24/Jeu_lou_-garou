@@ -385,7 +385,7 @@ class Jeux:
             if players.get_is_alive() == 1:
                 vivant.append(players.get_name())
         print("Il reste : " + str(vivant) + "encore en vie \n")
-        self.__server.broadcast_message("Il reste : " + str(vivant) + "encore en vie \n")
+        self.__server.broadcast_message("Il reste : " + str(vivant) + " encore en vie \n")
 
 
     def finish(self):
