@@ -4,7 +4,7 @@ from src.Jeux import Jeux
 from src.IP import ip_adress
 class Server:
 
-    def __init__(self, host, port, nb_player, nb_bots, nb_total):
+    def __init__(self, host, port, nb_player, nb_bots):
         self.nb_players = nb_player
         self.host = host
         self.port = port
@@ -17,7 +17,7 @@ class Server:
         self.clients_player = {}
         self.filename = "src/master_ip.txt"
         self.bots = nb_bots
-        self.players_total = nb_total
+
     def handle_client(self, client_socket):
         try:
             while True:
@@ -97,7 +97,7 @@ def activation():
         nb_players = int(input("Number of players: "))
     nb_bots = nb_total - nb_players
 
-    server = Server("0.0.0.0", 8080, nb_players, nb_bots, nb_total)
+    server = Server("0.0.0.0", 8080, nb_players, nb_bots)
     print(f"Server is listening on {server.host}:{server.port}")
 
 
