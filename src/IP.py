@@ -3,7 +3,6 @@ import os
 from git import Repo
 
 
-
 class ip_adress():
     def get_ip_address(self):
         try:
@@ -13,6 +12,7 @@ class ip_adress():
             s.connect(('8.8.8.8', 80))
             ip_address = s.getsockname()[0]
             s.close()
+
             return ip_address
         except socket.error as e:
             print(f"Erreur lors de la récupération de l'adresse IP : {e}")
@@ -29,21 +29,6 @@ class ip_adress():
         #self.add_to_gitignore()
         self.update_github_file(file_path)
 
-    """def add_to_gitignore(self, directory):
-        gitignore_path = os.path.join(os.getcwd(), '.gitignore')
-
-        if not os.path.exists(gitignore_path):
-            with open(gitignore_path, 'w') as gitignore_file:
-                gitignore_file.write(f'{directory}/\n')
-            print(f'Added {directory}/ to .gitignore')
-        else:
-            with open(gitignore_path, 'a') as gitignore_file:
-                gitignore_file.write(f'{directory}/\n')
-            print(f'Appended {directory}/ to .gitignore')
-
-    if __name__ == "__main__":
-        add_to_gitignore('__pycache__')"""
-
     def update_github_file(self, file_path):
         # Construire l'URL de l'API GitHub pour obtenir le contenu du fichier
         api_url =  r"C:\Users\Blandine\Tp_python_avance\Jeu_lou_-garou"
@@ -55,7 +40,6 @@ class ip_adress():
         os.replace(file_path, dest_path)
 
         if repo.is_dirty():
-            # Ajouter tous les fichiers modifiés pour le commit
             repo.git.add("--all")
 
             # Effectuer le commit
