@@ -380,7 +380,7 @@ class Jeux:
             return 0
 
         vivant = []
-        for players in self.__get_players():
+        for players in self.get_players():
             if players.get_is_alive() == 1:
                 vivant.append(players.get_name())
         print("Il reste : " + str(vivant) + "encore en vie \n")
