@@ -1,8 +1,7 @@
 import socket
 import threading
 from src.Jeux import Jeux
-import tkinter as tk
-
+from src.IP import ip_adress
 class Server:
 
     def __init__(self, host, port, nb_player, nb_bots, nb_total):
@@ -81,16 +80,13 @@ class Server:
                     value.send(message.encode('utf-8'))
                 except Exception as e:
                     print(f"Error sending message to client: {e}")
-
-    def clear_messages(self):
-        self.messages = []
-
     def get_client_player(self):
         return self.clients_player
 
 
 def activation():
-
+    appele_classe = ip_adress()
+    ip_address = appele_classe.ecrit_ip()
     nb_total = 0
     while nb_total < 7 or nb_total > 16:
         print("Vous devez choisir combien de joueurs voulez-vous entre 7 et 16")

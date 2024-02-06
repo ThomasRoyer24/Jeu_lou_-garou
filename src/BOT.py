@@ -24,3 +24,4 @@ class bot:
 
     def set_choix_gentil(self, name):
         self.choix_gentil = name
+

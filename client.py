@@ -58,8 +58,8 @@ def get_github_file_content():
 
 
 
-def main():
+def main_client():
     Client(get_github_file_content(), 8080)
 
 if __name__ == "__main__":
-    main()
+    main_client()

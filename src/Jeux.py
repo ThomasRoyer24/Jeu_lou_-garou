@@ -109,7 +109,6 @@ class Jeux:
             if self.__sauve:
                 liste.append("sauve")
             liste.append("rien")
-            print(liste)
             choix = random.choice(liste)
         else:
             choix = self.condition_sorciere(players)
@@ -284,6 +283,7 @@ class Jeux:
             if players.get_role() == 'sorciere' and players.get_is_alive() == 1:
                 self.__server.broadcast_message("Meneur <--> La sorciere se reveille\n")
                 self.sorciere(players)
+                self.__server.broadcast_message("Meneur <--> La sorciere se rendort\n")
             else:
                 self.__server.personal_messages('<---------------------------------------VOUS DORMEZ zzzzzzzz----------------------------->' + "\n",players.get_name())
 
@@ -391,3 +391,5 @@ class Jeux:
             print("Les loups ont gagné")
             return 1
         return 0
+
+#print les roles encore vivants a la fin du tour

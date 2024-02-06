@@ -1,8 +1,5 @@
 import socket
 import os
-import requests
-import base64
-import git
 from git import Repo
 
 
@@ -29,9 +26,9 @@ class ip_adress():
         file.write(ip_adresse)
         file.close()
         # Mettre à jour le fichier sur GitHub
-        self.update_github_file(file_path, ip_adresse)
+        self.update_github_file(file_path)
 
-    def update_github_file(self, file_path, new_text):
+    def update_github_file(self, file_path):
         # Construire l'URL de l'API GitHub pour obtenir le contenu du fichier
         api_url =  r"C:\Users\Blandine\Tp_python_avance\Jeu_lou_-garou"
 
