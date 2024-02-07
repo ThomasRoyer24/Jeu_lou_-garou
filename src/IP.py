@@ -31,7 +31,7 @@ class ip_adress():
     def update_github_file(self, file_path):
         # Récupérer le répertoire du script
         script_dir = os.path.dirname(os.path.abspath(__file__))
-        print(script_dir)
+
         # Remonter d'un niveau pour obtenir le répertoire parent
         parent_dir = os.path.dirname(script_dir)
 
