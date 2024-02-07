@@ -7,7 +7,6 @@ class ip_adress():
     def get_ip_address(self):
         try:
             # Créez une connexion à un serveur fictif
-            # (le choix de l'adresse 8.8.8.8 est arbitraire, c'est l'adresse IP du serveur DNS public de Google)
             s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
             s.connect(('8.8.8.8', 80))
             ip_address = s.getsockname()[0]
@@ -32,7 +31,7 @@ class ip_adress():
     def update_github_file(self, file_path):
         # Récupérer le répertoire du script
         script_dir = os.path.dirname(os.path.abspath(__file__))
-
+        print(script_dir)
         # Remonter d'un niveau pour obtenir le répertoire parent
         parent_dir = os.path.dirname(script_dir)
 
